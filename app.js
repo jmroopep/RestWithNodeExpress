@@ -1,4 +1,5 @@
 const express = require("express");
+const adminRouter = require("./routers/adminRouter.js");
 
 const app = express();
 
@@ -9,8 +10,8 @@ bookRouter.route("/books").get((req, res) => {
   const response = { hello: "This is my API" };
   res.json(response);
 });
-
 app.use("/api", bookRouter);
+app.use("/admin", adminRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to my Nodemon API!");
