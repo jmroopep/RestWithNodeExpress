@@ -29,6 +29,21 @@ bookRouter.route("/books").get((req, res) => {
     }
   })();
 });
+bookRouter.route("/books/:bookId").get((req, res) => {
+  (async function getBookById() {
+    try {
+      await mongoose.connect(
+        "mongodb+srv://janeaquafina:PSofAKVbDXNtqowd@books.84ky1vy.mongodb.net/bookdata?retryWrites=true&w=majority"
+      );
+      const bookId = req.params.bookId;
+      const Book = require("./models/bookModel");
+      const book = await Book.findById(bookId);
+      return res.json(book);
+    } catch (error) {
+      debug(error.stack);
+    }
+  })();
+});
 
 app.use("/api", bookRouter);
 app.use("/admin", adminRouter);
